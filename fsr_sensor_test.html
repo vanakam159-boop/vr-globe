@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FSR Sensor Test</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #071018;
+      --panel: rgba(20, 31, 44, 0.86);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #edf7ff;
+      --muted: #8ca3b8;
+      --left: #5ad7ff;
+      --right: #7af0a6;
+      --warn: #ffcf5a;
+      --bad: #ff7a7a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 28px;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(90, 215, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(122, 240, 166, 0.16), transparent 34%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 18px;
+      background: #5ad7ff;
+      color: #061018;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.disconnect {
+      background: rgba(255, 122, 122, 0.16);
+      color: #ffb3b3;
+      border: 1px solid rgba(255, 122, 122, 0.35);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--warn);
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .status.connected .dot { background: var(--right); }
+    .status.error .dot { background: var(--bad); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      background: var(--panel);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.26);
+    }
+
+    .sensor-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .sensor-title h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pill.pressed {
+      background: rgba(122, 240, 166, 0.18);
+      color: var(--right);
+    }
+
+    .pressure {
+      margin-bottom: 10px;
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .left .pressure { color: var(--left); }
+    .right .pressure { color: var(--right); }
+
+    .bar {
+      height: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 14px 0 18px;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #5ad7ff, #ffffff);
+      transition: width 0.18s linear;
+    }
+
+    .right .fill {
+      background: linear-gradient(90deg, #7af0a6, #ffffff);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .label {
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .value {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .wiring,
+    .log-panel {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: var(--panel);
+    }
+
+    .wiring h3,
+    .log-panel h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .wiring-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    code {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+
+    pre {
+      height: 180px;
+      overflow: auto;
+      margin: 0;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      color: #c7e6ff;
+      font-size: 13px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 18px; }
+      header { flex-direction: column; }
+      .grid,
+      .wiring-grid { grid-template-columns: 1fr; }
+      .pressure { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>FSR Sensor Test</h1>
+        <p>Connect the ESP32, then press each sensor. Readings update every half second from GPIO4 and GPIO5.</p>
+      </div>
+      <button id="connectButton">Connect ESP32</button>
+    </header>
+
+    <div class="status" id="statusBox">
+      <span class="dot"></span>
+      <span id="statusText">Waiting for connection. Use Chrome or Edge.</span>
+    </div>
+
+    <section class="grid">
+      <article class="card left">
+        <div class="sensor-title">
+          <h2>FSR 1</h2>
+          <span class="pill" id="fsr1Pressed">Not pressed</span>
+        </div>
+        <div class="pressure" id="fsr1Percent">0%</div>
+        <div class="bar"><div class="fill" id="fsr1Bar"></div></div>
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Raw ADC</div>
+            <div class="value" id="fsr1Raw">0</div>
+          </div>
+          <div class="stat">
+            <div class="label">Voltage</div>
+            <div class="value" id="fsr1Voltage">0.00V</div>
+          </div>
+          <div class="stat">
+            <div class="label">Pin</div>
+            <div class="value">GPIO4</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card right">
+        <div class="sensor-title">
+          <h2>FSR 2</h2>
+          <span class="pill" id="fsr2Pressed">Not pressed</span>
+        </div>
+        <div class="pressure" id="fsr2Percent">0%</div>
+        <div class="bar"><div class="fill" id="fsr2Bar"></div></div>
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Raw ADC</div>
+            <div class="value" id="fsr2Raw">0</div>
+          </div>
+          <div class="stat">
+            <div class="label">Voltage</div>
+            <div class="value" id="fsr2Voltage">0.00V</div>
+          </div>
+          <div class="stat">
+            <div class="label">Pin</div>
+            <div class="value">GPIO5</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="wiring">
+      <h3>Expected Wiring</h3>
+      <div class="wiring-grid">
+        <div>FSR 1: one leg to <code>3.3V</code>, other leg to <code>GPIO4</code>, <code>10k</code> from GPIO4 to GND.</div>
+        <div>FSR 2: one leg to <code>3.3V</code>, other leg to <code>GPIO5</code>, <code>10k</code> from GPIO5 to GND.</div>
+      </div>
+    </section>
+
+    <section class="log-panel">
+      <h3>Serial Log</h3>
+      <pre id="log"></pre>
+    </section>
+  </main>
+
+  <script>
+    const ADC_MAX = 4095;
+    const PRESS_THRESHOLD = 12;
+    const SIGNAL_DISPLAY_MAX = 300;
+
+    let port;
+    let reader;
+    let readActive = false;
+    let disconnecting = false;
+    let noDataTimeout = null;
+    let lastReadingAt = 0;
+
+    const $ = (id) => document.getElementById(id);
+
+    function setStatus(message, type = '') {
+      $('statusText').textContent = message;
+      $('statusBox').className = `status ${type}`;
+    }
+
+    function appendLog(line) {
+      const log = $('log');
+      const time = new Date().toLocaleTimeString();
+      log.textContent = `[${time}] ${line}\n` + log.textContent;
+      const lines = log.textContent.split('\n').slice(0, 80);
+      log.textContent = lines.join('\n');
+    }
+
+    function clearNoDataWarning() {
+      if (noDataTimeout) {
+        clearTimeout(noDataTimeout);
+        noDataTimeout = null;
+      }
+    }
+
+    function armNoDataWarning() {
+      clearNoDataWarning();
+      noDataTimeout = setTimeout(() => {
+        if (port && readActive && !lastReadingAt) {
+          setStatus('Connected, but no FSR data yet. Check firmware upload, baud rate 115200, and close Serial Monitor.', 'error');
+          appendLog('No data received after connecting.');
+        }
+      }, 2500);
+    }
+
+    function updateSensor(prefix, raw, pressedFromDevice, millivoltsFromDevice) {
+      const value = Math.max(0, Math.min(ADC_MAX, Number(raw) || 0));
+      const signalPercent = Math.min(100, (value / SIGNAL_DISPLAY_MAX) * 100);
+      const percentText = signalPercent < 10
+        ? signalPercent.toFixed(1)
+        : Math.round(signalPercent).toString();
+      const millivolts = Number.isFinite(Number(millivoltsFromDevice))
+        ? Number(millivoltsFromDevice)
+        : (value / ADC_MAX) * 3300;
+      const pressed = typeof pressedFromDevice === 'boolean' ? pressedFromDevice : value > PRESS_THRESHOLD;
+
+      $(`${prefix}Raw`).textContent = value;
+      $(`${prefix}Percent`).textContent = `${percentText}%`;
+      $(`${prefix}Voltage`).textContent = `${(millivolts / 1000).toFixed(2)}V`;
+      $(`${prefix}Bar`).style.width = `${signalPercent}%`;
+      $(`${prefix}Pressed`).textContent = pressed ? 'Pressed' : 'Not pressed';
+      $(`${prefix}Pressed`).classList.toggle('pressed', pressed);
+    }
+
+    function parseLine(line) {
+      if (!line || line.startsWith('#')) {
+        if (line) appendLog(line);
+        return;
+      }
+
+      let data = null;
+      try {
+        data = JSON.parse(line);
+      } catch {
+        const fsrMatch = line.match(/FSR1:\s*(\d+)\s+FSR2:\s*(\d+)/i);
+        const balanceBoardMatch = line.match(/TiltX:\s*([-\d.]+)\s+TiltY:\s*([-\d.]+)\s+Left:\s*(\d+)\s+Right:\s*(\d+)/i);
+        const forceOnlyMatch = line.match(/Left:\s*(\d+)\s+Right:\s*(\d+)/i);
+
+        if (fsrMatch) {
+          data = { fsr1: Number(fsrMatch[1]), fsr2: Number(fsrMatch[2]) };
+        } else if (balanceBoardMatch) {
+          data = { fsr1: Number(balanceBoardMatch[3]), fsr2: Number(balanceBoardMatch[4]) };
+        } else if (forceOnlyMatch) {
+          data = { fsr1: Number(forceOnlyMatch[1]), fsr2: Number(forceOnlyMatch[2]) };
+        }
+      }
+
+      if (!data) {
+        appendLog(`Unparsed: ${line}`);
+        return;
+      }
+
+      lastReadingAt = Date.now();
+      clearNoDataWarning();
+      setStatus('Receiving FSR readings. Press each sensor to test pressure.', 'connected');
+      updateSensor('fsr1', data.fsr1, data.fsr1Pressed, data.fsr1Mv ?? (data.fsr1Voltage * 1000));
+      updateSensor('fsr2', data.fsr2, data.fsr2Pressed, data.fsr2Mv ?? (data.fsr2Voltage * 1000));
+      appendLog(line);
+    }
+
+    async function connect() {
+      if (!('serial' in navigator)) {
+        setStatus('Web Serial is not available. Open this page in Chrome or Edge.', 'error');
+        return;
+      }
+
+      try {
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 115200 });
+        readActive = true;
+        disconnecting = false;
+        lastReadingAt = 0;
+        $('connectButton').textContent = 'Disconnect';
+        $('connectButton').classList.add('disconnect');
+        setStatus('Connected. Waiting for FSR readings...', 'connected');
+        armNoDataWarning();
+
+        const decoder = new TextDecoder();
+        reader = port.readable.getReader();
+
+        let buffer = '';
+        while (readActive) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split(/\r?\n/);
+          buffer = lines.pop() || '';
+          lines.forEach((line) => parseLine(line.trim()));
+        }
+
+        buffer += decoder.decode();
+        if (buffer.trim()) parseLine(buffer.trim());
+      } catch (error) {
+        if (!disconnecting) {
+          setStatus(`Error: ${error.message}`, 'error');
+          appendLog(`Error: ${error.message}`);
+        }
+      } finally {
+        await cleanup();
+      }
+    }
+
+    async function cleanup() {
+      readActive = false;
+
+      if (reader) {
+        try { await reader.cancel(); } catch {}
+        try { reader.releaseLock(); } catch {}
+        reader = null;
+      }
+
+      if (port) {
+        try { await port.close(); } catch {}
+        port = null;
+      }
+
+      clearNoDataWarning();
+      $('connectButton').textContent = 'Connect ESP32';
+      $('connectButton').classList.remove('disconnect');
+      if (disconnecting) setStatus('Disconnected.', '');
+      disconnecting = false;
+    }
+
+    async function disconnect() {
+      disconnecting = true;
+      await cleanup();
+    }
+
+    $('connectButton').addEventListener('click', () => {
+      if (port) disconnect();
+      else connect();
+    });
+  </script>
+</body>
+</html>

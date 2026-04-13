@@ -1,0 +1,457 @@
+Magic: 46546c67
+JSON chunk length: 411632
+
+=== NODES ===
+  0: "Autumn Leaf" [mesh:0]
+  1: "Cloud" [mesh:1]
+  2: "Autumn Land" [mesh:2]
+  3: "Pumpkin" [mesh:3]
+  4: "Eye.L_0"
+  5: "EyeBrow.L_1"
+  6: "Eye.R_2"
+  7: "EyeBrow.R_3"
+  8: "Jaw_4"
+  9: "Head_5" children:[4,5,6,7,8]
+  10: "Neck_6" children:[9]
+  11: "Hand.L_7"
+  12: "ForeArm.L_8" children:[11]
+  13: "Arm.L_9" children:[12]
+  14: "Shoulder.L_10" children:[13]
+  15: "Hand.R_11"
+  16: "ForeArm.R_12" children:[15]
+  17: "Arm.R_13" children:[16]
+  18: "Shoulder.R_14" children:[17]
+  19: "Spine.003_15" children:[10,14,18]
+  20: "Spine.001_16" children:[19]
+  21: "Spine.002_17" children:[20]
+  22: "Toe.L_18"
+  23: "Foot.L_19" children:[22]
+  24: "Shin.L_20" children:[23]
+  25: "Thigh.L_21" children:[24]
+  26: "Hip.L_22" children:[25]
+  27: "Toe.R_23"
+  28: "Foot.R_24" children:[27]
+  29: "Shin.R_25" children:[28]
+  30: "Thigh.R_26" children:[29]
+  31: "Hip.R_27" children:[30]
+  32: "Spine_28" children:[21,26,31]
+  33: "Tail.001_29"
+  34: "Tail.002_30" children:[33]
+  35: "Tail.003_31" children:[34]
+  36: "Tail.004_32" children:[35]
+  37: "Tail_33" children:[36]
+  38: "Root_34" children:[32,37]
+  39: "GLTF_created_0_rootJoint" children:[38]
+  40: "Object_7.003" [mesh:4]
+  41: "Squirrel_35"
+  42: "GLTF_created_0.002" children:[40,41,39]
+  43: "SquirrelArmature_36" children:[42]
+  44: "GLTF_SceneRootNode.005" children:[43]
+  45: "root.005" children:[44]
+  46: "Sketchfab_model.012" children:[45]
+  47: "Autumn" children:[2,3,46]
+  48: "Board" [mesh:5]
+  49: "Snow Land" [mesh:6]
+  50: "Snow" children:[49]
+  51: "Fish_Red" [mesh:7]
+  52: "Fish_Yellow" [mesh:8]
+  53: "Grass.001" [mesh:9]
+  54: "Grass.002" [mesh:10]
+  55: "Grass.003" [mesh:11]
+  56: "Grass.004" [mesh:12]
+  57: "Grass.009"
+  58: "Grass.010" [mesh:13]
+  59: "Grass.026" [mesh:14]
+  60: "Grass.066" [mesh:15]
+  61: "Grass.143" [mesh:16]
+  62: "Grass.146" [mesh:17]
+  63: "Grass.186" [mesh:18]
+  64: "Grass.226" [mesh:19]
+  65: "Grass.266" [mesh:20]
+  66: "Grass.267" [mesh:21]
+  67: "Grass.307" [mesh:22]
+  68: "Grass.347" [mesh:23]
+  69: "Grass.387" [mesh:24]
+  70: "Grass.430" [mesh:25]
+  71: "Grass.467" [mesh:26]
+  72: "Grass.507" [mesh:27]
+  73: "Grass.547" [mesh:28]
+  74: "Grass.587" [mesh:29]
+  75: "Grass.627" [mesh:30]
+  76: "Grass.667" [mesh:31]
+  77: "Grass.741" [mesh:32]
+  78: "Grass.747" [mesh:33]
+  79: "Grass.787" [mesh:34]
+  80: "Grass.826" [mesh:35]
+  81: "Grass.866" [mesh:36]
+  82: "Flower" children:[53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81]
+  83: "Spring Land" [mesh:37]
+  84: "Spring" children:[51,52,82,83]
+  85: "Boat" [mesh:38]
+  86: "mixamorig:HeadTop_End"
+  87: "mixamorig:Head" children:[86]
+  88: "mixamorig:Neck" children:[87]
+  89: "mixamorig:LeftHandThumb4"
+  90: "mixamorig:LeftHandThumb3" children:[89]
+  91: "mixamorig:LeftHandThumb2" children:[90]
+  92: "mixamorig:LeftHandThumb1" children:[91]
+  93: "mixamorig:LeftHandIndex4"
+  94: "mixamorig:LeftHandIndex3" children:[93]
+  95: "mixamorig:LeftHandIndex2" children:[94]
+  96: "mixamorig:LeftHandIndex1" children:[95]
+  97: "mixamorig:LeftHandMiddle4"
+  98: "mixamorig:LeftHandMiddle3" children:[97]
+  99: "mixamorig:LeftHandMiddle2" children:[98]
+  100: "mixamorig:LeftHandMiddle1" children:[99]
+  101: "mixamorig:LeftHandRing4"
+  102: "mixamorig:LeftHandRing3" children:[101]
+  103: "mixamorig:LeftHandRing2" children:[102]
+  104: "mixamorig:LeftHandRing1" children:[103]
+  105: "mixamorig:LeftHandPinky4"
+  106: "mixamorig:LeftHandPinky3" children:[105]
+  107: "mixamorig:LeftHandPinky2" children:[106]
+  108: "mixamorig:LeftHandPinky1" children:[107]
+  109: "mixamorig:LeftHand" children:[92,96,100,104,108]
+  110: "mixamorig:LeftForeArm" children:[109]
+  111: "mixamorig:LeftArm" children:[110]
+  112: "mixamorig:LeftShoulder" children:[111]
+  113: "mixamorig:RightHandThumb4"
+  114: "mixamorig:RightHandThumb3" children:[113]
+  115: "mixamorig:RightHandThumb2" children:[114]
+  116: "mixamorig:RightHandThumb1" children:[115]
+  117: "mixamorig:RightHandIndex4"
+  118: "mixamorig:RightHandIndex3" children:[117]
+  119: "mixamorig:RightHandIndex2" children:[118]
+  120: "mixamorig:RightHandIndex1" children:[119]
+  121: "mixamorig:RightHandMiddle4"
+  122: "mixamorig:RightHandMiddle3" children:[121]
+  123: "mixamorig:RightHandMiddle2" children:[122]
+  124: "mixamorig:RightHandMiddle1" children:[123]
+  125: "mixamorig:RightHandRing4"
+  126: "mixamorig:RightHandRing3" children:[125]
+  127: "mixamorig:RightHandRing2" children:[126]
+  128: "mixamorig:RightHandRing1" children:[127]
+  129: "mixamorig:RightHandPinky4"
+  130: "mixamorig:RightHandPinky3" children:[129]
+  131: "mixamorig:RightHandPinky2" children:[130]
+  132: "mixamorig:RightHandPinky1" children:[131]
+  133: "mixamorig:RightHand" children:[116,120,124,128,132]
+  134: "mixamorig:RightForeArm" children:[133]
+  135: "mixamorig:RightArm" children:[134]
+  136: "mixamorig:RightShoulder" children:[135]
+  137: "mixamorig:Spine2" children:[88,112,136]
+  138: "mixamorig:Spine1" children:[137]
+  139: "mixamorig:Spine" children:[138]
+  140: "mixamorig:LeftToe_End"
+  141: "mixamorig:LeftToeBase" children:[140]
+  142: "mixamorig:LeftFoot" children:[141]
+  143: "mixamorig:LeftLeg" children:[142]
+  144: "mixamorig:LeftUpLeg" children:[143]
+  145: "mixamorig:RightToe_End"
+  146: "mixamorig:RightToeBase" children:[145]
+  147: "mixamorig:RightFoot" children:[146]
+  148: "mixamorig:RightLeg" children:[147]
+  149: "mixamorig:RightUpLeg" children:[148]
+  150: "mixamorig:Hips" children:[139,144,149]
+  151: "Ch42__Eyelashes.001" [mesh:39]
+  152: "Ch42_Body1.001" [mesh:40]
+  153: "Ch42_Hair1.001" [mesh:41]
+  154: "Ch42_Shirt.001" [mesh:42]
+  155: "Ch42_Shorts.001" [mesh:43]
+  156: "Ch42_Sneakers.001" [mesh:44]
+  157: "Npc 1.001" children:[151,152,153,154,155,156,150]
+  158: "mixamorig7:HeadTop_End"
+  159: "mixamorig7:Head" children:[158]
+  160: "mixamorig7:Neck" children:[159]
+  161: "mixamorig7:LeftHandThumb4"
+  162: "mixamorig7:LeftHandThumb3" children:[161]
+  163: "mixamorig7:LeftHandThumb2" children:[162]
+  164: "mixamorig7:LeftHandThumb1" children:[163]
+  165: "mixamorig7:LeftHandIndex4"
+  166: "mixamorig7:LeftHandIndex3" children:[165]
+  167: "mixamorig7:LeftHandIndex2" children:[166]
+  168: "mixamorig7:LeftHandIndex1" children:[167]
+  169: "mixamorig7:LeftHandMiddle4"
+  170: "mixamorig7:LeftHandMiddle3" children:[169]
+  171: "mixamorig7:LeftHandMiddle2" children:[170]
+  172: "mixamorig7:LeftHandMiddle1" children:[171]
+  173: "mixamorig7:LeftHandRing4"
+  174: "mixamorig7:LeftHandRing3" children:[173]
+  175: "mixamorig7:LeftHandRing2" children:[174]
+  176: "mixamorig7:LeftHandRing1" children:[175]
+  177: "mixamorig7:LeftHandPinky4"
+  178: "mixamorig7:LeftHandPinky3" children:[177]
+  179: "mixamorig7:LeftHandPinky2" children:[178]
+  180: "mixamorig7:LeftHandPinky1" children:[179]
+  181: "mixamorig7:LeftHand" children:[164,168,172,176,180]
+  182: "mixamorig7:LeftForeArm" children:[181]
+  183: "mixamorig7:LeftArm" children:[182]
+  184: "mixamorig7:LeftShoulder" children:[183]
+  185: "mixamorig7:RightHandThumb4"
+  186: "mixamorig7:RightHandThumb3" children:[185]
+  187: "mixamorig7:RightHandThumb2" children:[186]
+  188: "mixamorig7:RightHandThumb1" children:[187]
+  189: "mixamorig7:RightHandIndex4"
+  190: "mixamorig7:RightHandIndex3" children:[189]
+  191: "mixamorig7:RightHandIndex2" children:[190]
+  192: "mixamorig7:RightHandIndex1" children:[191]
+  193: "mixamorig7:RightHandMiddle4"
+  194: "mixamorig7:RightHandMiddle3" children:[193]
+  195: "mixamorig7:RightHandMiddle2" children:[194]
+  196: "mixamorig7:RightHandMiddle1" children:[195]
+  197: "mixamorig7:RightHandRing4"
+  198: "mixamorig7:RightHandRing3" children:[197]
+  199: "mixamorig7:RightHandRing2" children:[198]
+  200: "mixamorig7:RightHandRing1" children:[199]
+  201: "mixamorig7:RightHandPinky4"
+  202: "mixamorig7:RightHandPinky3" children:[201]
+  203: "mixamorig7:RightHandPinky2" children:[202]
+  204: "mixamorig7:RightHandPinky1" children:[203]
+  205: "mixamorig7:RightHand" children:[188,192,196,200,204]
+  206: "mixamorig7:RightForeArm" children:[205]
+  207: "mixamorig7:RightArm" children:[206]
+  208: "mixamorig7:RightShoulder" children:[207]
+  209: "mixamorig7:Spine2" children:[160,184,208]
+  210: "mixamorig7:Spine1" children:[209]
+  211: "mixamorig7:Spine" children:[210]
+  212: "mixamorig7:LeftToe_End"
+  213: "mixamorig7:LeftToeBase" children:[212]
+  214: "mixamorig7:LeftFoot" children:[213]
+  215: "mixamorig7:LeftLeg" children:[214]
+  216: "mixamorig7:LeftUpLeg" children:[215]
+  217: "mixamorig7:RightToe_End"
+  218: "mixamorig7:RightToeBase" children:[217]
+  219: "mixamorig7:RightFoot" children:[218]
+  220: "mixamorig7:RightLeg" children:[219]
+  221: "mixamorig7:RightUpLeg" children:[220]
+  222: "mixamorig7:Hips" children:[211,216,221]
+  223: "Ch08_Beard" [mesh:45]
+  224: "Ch08_Body" [mesh:46]
+  225: "Ch08_Eyelashes" [mesh:47]
+  226: "Ch08_Hair" [mesh:48]
+  227: "Ch08_Hoodie" [mesh:49]
+  228: "Ch08_Pants" [mesh:50]
+  229: "Ch08_Sneakers" [mesh:51]
+  230: "NPC 2" children:[223,224,225,226,227,228,229,222]
+  231: "mixamorig:HeadTop_End"
+  232: "mixamorig:Head" children:[231]
+  233: "mixamorig:Neck" children:[232]
+  234: "mixamorig:LeftHandThumb4"
+  235: "mixamorig:LeftHandThumb3" children:[234]
+  236: "mixamorig:LeftHandThumb2" children:[235]
+  237: "mixamorig:LeftHandThumb1" children:[236]
+  238: "mixamorig:LeftHandIndex4"
+  239: "mixamorig:LeftHandIndex3" children:[238]
+  240: "mixamorig:LeftHandIndex2" children:[239]
+  241: "mixamorig:LeftHandIndex1" children:[240]
+  242: "mixamorig:LeftHandMiddle4"
+  243: "mixamorig:LeftHandMiddle3" children:[242]
+  244: "mixamorig:LeftHandMiddle2" children:[243]
+  245: "mixamorig:LeftHandMiddle1" children:[244]
+  246: "mixamorig:LeftHandRing4"
+  247: "mixamorig:LeftHandRing3" children:[246]
+  248: "mixamorig:LeftHandRing2" children:[247]
+  249: "mixamorig:LeftHandRing1" children:[248]
+  250: "mixamorig:LeftHandPinky4"
+  251: "mixamorig:LeftHandPinky3" children:[250]
+  252: "mixamorig:LeftHandPinky2" children:[251]
+  253: "mixamorig:LeftHandPinky1" children:[252]
+  254: "mixamorig:LeftHand" children:[237,241,245,249,253]
+  255: "mixamorig:LeftForeArm" children:[254]
+  256: "mixamorig:LeftArm" children:[255]
+  257: "mixamorig:LeftShoulder" children:[256]
+  258: "mixamorig:RightHandThumb4"
+  259: "mixamorig:RightHandThumb3" children:[258]
+  260: "mixamorig:RightHandThumb2" children:[259]
+  261: "mixamorig:RightHandThumb1" children:[260]
+  262: "mixamorig:RightHandIndex4"
+  263: "mixamorig:RightHandIndex3" children:[262]
+  264: "mixamorig:RightHandIndex2" children:[263]
+  265: "mixamorig:RightHandIndex1" children:[264]
+  266: "mixamorig:RightHandMiddle4"
+  267: "mixamorig:RightHandMiddle3" children:[266]
+  268: "mixamorig:RightHandMiddle2" children:[267]
+  269: "mixamorig:RightHandMiddle1" children:[268]
+  270: "mixamorig:RightHandRing4"
+  271: "mixamorig:RightHandRing3" children:[270]
+  272: "mixamorig:RightHandRing2" children:[271]
+  273: "mixamorig:RightHandRing1" children:[272]
+  274: "mixamorig:RightHandPinky4"
+  275: "mixamorig:RightHandPinky3" children:[274]
+  276: "mixamorig:RightHandPinky2" children:[275]
+  277: "mixamorig:RightHandPinky1" children:[276]
+  278: "mixamorig:RightHand" children:[261,265,269,273,277]
+  279: "mixamorig:RightForeArm" children:[278]
+  280: "mixamorig:RightArm" children:[279]
+  281: "mixamorig:RightShoulder" children:[280]
+  282: "mixamorig:Spine2" children:[233,257,281]
+  283: "mixamorig:Spine1" children:[282]
+  284: "mixamorig:Spine" children:[283]
+  285: "mixamorig:LeftToe_End"
+  286: "mixamorig:LeftToeBase" children:[285]
+  287: "mixamorig:LeftFoot" children:[286]
+  288: "mixamorig:LeftLeg" children:[287]
+  289: "mixamorig:LeftUpLeg" children:[288]
+  290: "mixamorig:RightToe_End"
+  291: "mixamorig:RightToeBase" children:[290]
+  292: "mixamorig:RightFoot" children:[291]
+  293: "mixamorig:RightLeg" children:[292]
+  294: "mixamorig:RightUpLeg" children:[293]
+  295: "mixamorig:Hips" children:[284,289,294]
+  296: "Ch02_Body" [mesh:52]
+  297: "Ch02_Cloth" [mesh:53]
+  298: "Ch02_Eyelashes" [mesh:54]
+  299: "Ch02_Hair" [mesh:55]
+  300: "Ch02_Sneakers" [mesh:56]
+  301: "Ch02_Socks" [mesh:57]
+  302: "NPC 3" children:[296,297,298,299,300,301,295]
+  303: "Summer Land" [mesh:58]
+  304: "Summer" children:[85,157,230,302,303]
+  305: "Season Board ( rotator)" children:[47,48,50,84,304]
+  306: "Snow Flake" [mesh:59]
+  307: "Scene.006" children:[0,1,305,306]
+
+=== ANIMATIONS ===
+  0: "SquirrelArmatureAction" (108 channels)
+  1: "npc idle" (195 channels)
+  2: "pushup" (195 channels)
+  3: "Armature|mixamo.com|Layer0.003" (195 channels)
+  4: "Armature.001|mixamo.com|Layer0.001" (195 channels)
+
+=== MESHES ===
+  0: "Plane.939"
+  1: "Object_0.002"
+  2: "Plane.1158"
+  3: "Halloween Pumpkin_Halloween Pumpkin_0.008"
+  4: "Object_0.003"
+  5: "Cylinder.004"
+  6: "Cylinder.003"
+  7: "Plane.005"
+  8: "Plane.007"
+  9: "Plane.934"
+  10: "Plane.935"
+  11: "Plane.936"
+  12: "Plane.937"
+  13: "Plane.030"
+  14: "Plane.054"
+  15: "Plane.094"
+  16: "Plane.171"
+  17: "Plane.174"
+  18: "Plane.214"
+  19: "Plane.254"
+  20: "Plane.294"
+  21: "Plane.295"
+  22: "Plane.335"
+  23: "Plane.375"
+  24: "Plane.415"
+  25: "Plane.458"
+  26: "Plane.495"
+  27: "Plane.535"
+  28: "Plane.575"
+  29: "Plane.615"
+  30: "Plane.655"
+  31: "Plane.695"
+  32: "Plane.769"
+  33: "Plane.775"
+  34: "Plane.815"
+  35: "Plane.854"
+  36: "Plane.894"
+  37: "Cylinder.009"
+  38: "Boat_Boat White_0"
+  39: "Mesh.023"
+  40: "Mesh.020"
+  41: "Mesh.024"
+  42: "Mesh.021"
+  43: "Mesh.022"
+  44: "Mesh.019"
+  45: "Mesh.040"
+  46: "Mesh.034"
+  47: "Mesh.036"
+  48: "Mesh.039"
+  49: "Mesh.038"
+  50: "Mesh.037"
+  51: "Mesh.035"
+  52: "Mesh.043"
+  53: "Mesh.041"
+  54: "Mesh.042"
+  55: "Mesh.046"
+  56: "Mesh.044"
+  57: "Mesh.045"
+  58: "Cylinder.005"
+  59: "Plane.938"
+
+=== MATERIALS ===
+  0: "Atumn Leaf"
+  1: "Cloud Glow"
+  2: "Material.050"
+  3: "Material.051"
+  4: "Material.049"
+  5: "Material.052"
+  6: "Material.053"
+  7: "Material.054"
+  8: "rock_005"
+  9: "Plane_116"
+  10: "Plane_094"
+  11: "lambert2.001"
+  12: "rock_005.002"
+  13: "rock_005.001"
+  14: "Material.025"
+  15: "Halloween_Pumpkin"
+  16: "SquirrelTexture"
+  17: "Material.021"
+  18: "Mat04"
+  19: "Mat00"
+  20: "Material.023"
+  21: "lambert1"
+  22: "lambert8"
+  23: "lambert2"
+  24: "lambert3"
+  25: "lambert6"
+  26: "lambert4"
+  27: "lambert7"
+  28: "lambert5"
+  29: "cgaxis_models_98_14_03"
+  30: "Material.012"
+  31: "Snow Water"
+  32: "Fish"
+  33: "Fish.001"
+  34: "MAT_Flower.001"
+  35: "Material.055"
+  36: "Grass.002"
+  37: "Plane_094.002"
+  38: "Spring Water"
+  39: "Bridge_MAT"
+  40: "MAT_Grass.001"
+  41: "MAT_Grass1.001"
+  42: "kuvsh.001"
+  43: "Boat_White"
+  44: "Metal"
+  45: "Wood"
+  46: "Plastic"
+  47: "Box_Blue"
+  48: "Box_Grey"
+  49: "Floater_Red"
+  50: "Floater_White"
+  51: "Boat_Red"
+  52: "Boat_Gray"
+  53: "Ch42_Hair.001"
+  54: "Ch42_Body.001"
+  55: "Ch08_hair"
+  56: "Ch08_body"
+  57: "Ch08_body1"
+  58: "Ch02_body"
+  59: "Ch02_hair"
+  60: "Sand.001"
+  61: "Water.001"
+  62: "Material.027"
+  63: "BeachScene_Mat"
+  64: "Pipe"
+  65: "Material.029"
+  66: "Material.028"
+  67: "Ball2"
+  68: "Ball5"
+  69: "Ball3"
+  70: "Ball1"
+  71: "Ball4"
+  72: "bakedMat"
+  73: "Snow flake"
