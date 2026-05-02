@@ -310,6 +310,7 @@ export default function App() {
   // Menu & VR offset states
   const [menuOpen, setMenuOpen] = useState(false)
   const [vrOffset, setVrOffset] = useState([0, 0, 0])
+  const [vrRotOffset, setVrRotOffset] = useState([0, 0, 0])
 
   // Ref for camera data (updated by CameraTracker inside Canvas)
   const cameraDataRef = useRef({
@@ -439,6 +440,8 @@ export default function App() {
         masterScale={masterScale}
         vrOffset={vrOffset}
         setVrOffset={setVrOffset}
+        vrRotOffset={vrRotOffset}
+        setVrRotOffset={setVrRotOffset}
         freeLook={freeLook}
         setFreeLook={setFreeLook}
       />
@@ -563,7 +566,7 @@ export default function App() {
             <VRInputHandler setSpinState={setSpinState} />
 
             {/* VR Player spawn position + offset */}
-            <VRPlayerSetup spawnPosition={[151.37, 0, 11.83]} vrOffset={vrOffset} />
+            <VRPlayerSetup spawnPosition={[151.37, 0, 11.83]} vrOffset={vrOffset} vrRotOffset={vrRotOffset} />
 
             {/* Teleportation — both controllers, ground plane at model base */}
             <TeleportationPlane

@@ -21,6 +21,8 @@ export default function GameMenu({
   masterScale,
   vrOffset,
   setVrOffset,
+  vrRotOffset,
+  setVrRotOffset,
   freeLook,
   setFreeLook,
 }) {
@@ -54,18 +56,36 @@ export default function GameMenu({
     })
   }
 
-  const resetOffset = () => setVrOffset([0, 0, 0])
+  const changeRotOffset = (index, delta) => {
+    setVrRotOffset((prev) => {
+      const next = [...prev]
+      next[index] = Number((next[index] + delta).toFixed(4))
+      return next
+    })
+  }
+
+  const resetOffset = () => {
+    setVrOffset([0, 0, 0])
+    setVrRotOffset([0, 0, 0])
+  }
 
   const useCameraAsVRSpawn = () => {
     const cam = cameraDataRef?.current
-    if (!cam?.position) return
+    if (!cam?.position || !cam?.rotation) return
     const [cx, cy, cz] = cam.position
+    const [crx, cry, crz] = cam.rotation
     const [sx, sy, sz] = DEFAULT_VR_SPAWN
     // Offset = camera position - default spawn position
     setVrOffset([
       Number((cx - sx).toFixed(2)),
       Number((cy - sy).toFixed(2)),
       Number((cz - sz).toFixed(2)),
+    ])
+    // Rotation = exact camera rotation (radians)
+    setVrRotOffset([
+      Number(crx.toFixed(4)),
+      Number(cry.toFixed(4)),
+      Number(crz.toFixed(4)),
     ])
   }
 
@@ -124,8 +144,9 @@ export default function GameMenu({
               Adjust your VR spawn offset before entering VR.
             </p>
 
+            <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-secondary)', marginTop: 4 }}>Position Offset</div>
             {['X', 'Y', 'Z'].map((axis, i) => (
-              <div className="game-menu-input-row" key={axis}>
+              <div className="game-menu-input-row" key={`pos-${axis}`}>
                 <span className="game-menu-axis-label">{axis}</span>
                 <button
                   className="btn btn-ghost btn-step"
@@ -139,6 +160,28 @@ export default function GameMenu({
                 <button
                   className="btn btn-ghost btn-step"
                   onClick={() => changeOffset(i, 0.5)}
+                >
+                  +
+                </button>
+              </div>
+            ))}
+
+            <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-secondary)', marginTop: 8 }}>Rotation Offset (rad)</div>
+            {['X', 'Y', 'Z'].map((axis, i) => (
+              <div className="game-menu-input-row" key={`rot-${axis}`}>
+                <span className="game-menu-axis-label">{axis}</span>
+                <button
+                  className="btn btn-ghost btn-step"
+                  onClick={() => changeRotOffset(i, -0.1)}
+                >
+                  −
+                </button>
+                <span className="game-menu-axis-value">
+                  {vrRotOffset[i].toFixed(2)}
+                </span>
+                <button
+                  className="btn btn-ghost btn-step"
+                  onClick={() => changeRotOffset(i, 0.1)}
                 >
                   +
                 </button>
