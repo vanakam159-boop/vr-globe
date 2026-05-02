@@ -485,7 +485,7 @@ html, body, #root {
 /* ── Setup Mode Toggle Button ──────────────── */
 .setup-toggle-btn {
   position: fixed;
-  top: 20px;
+  top: 64px;
   left: 20px;
   z-index: 200;
   background: rgba(255,255,255,0.08);
@@ -510,6 +510,36 @@ html, body, #root {
   background: rgba(167, 139, 250, 0.25);
   color: var(--accent-primary);
   border-color: var(--accent-primary-dim);
+}
+
+/* ── Free Look Toggle Button ──────────────── */
+.freelook-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+  backdrop-filter: blur(10px);
+}
+
+.freelook-toggle-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--text-primary);
+}
+
+.freelook-toggle-btn.active {
+  background: rgba(86, 227, 159, 0.25);
+  color: #56e39f;
+  border-color: rgba(86, 227, 159, 0.4);
 }
 
 /* ============================================
@@ -803,15 +833,166 @@ html, body, #root {
   cursor: not-allowed;
 }
 
+/* ============================================
+   Game Menu Styles
+   ============================================ */
+
+.game-menu-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 250;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+  backdrop-filter: blur(10px);
+}
+
+.game-menu-btn:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--text-primary);
+}
+
+.game-menu-btn.active {
+  background: rgba(167, 139, 250, 0.25);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary-dim);
+}
+
+.game-menu-panel {
+  position: fixed;
+  top: 64px;
+  left: 20px;
+  z-index: 240;
+  width: min(360px, calc(100vw - 40px));
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border-color: var(--border-glass);
+}
+
+.game-menu-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.game-menu-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.game-menu-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.game-menu-section-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.game-menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.game-menu-status {
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(86, 227, 159, 0.15);
+  color: #56e39f;
+}
+
+.game-menu-hint {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.game-menu-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.game-menu-axis-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  min-width: 20px;
+  text-align: center;
+}
+
+.game-menu-axis-value {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.04);
+  padding: 4px 10px;
+  border-radius: 6px;
+  min-width: 70px;
+  text-align: center;
+}
+
+.btn-step {
+  padding: 6px 10px !important;
+  font-size: 0.9rem !important;
+  min-width: 32px;
+}
+
+.game-menu-copy-btn {
+  width: 100%;
+}
+
+.game-menu-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.game-menu-close-btn {
+  width: 100%;
+}
+
 @media (max-width: 760px) {
-  .quest-panel {
-    bottom: 112px;
+  .game-menu-panel {
+    top: 56px;
     left: 12px;
-    width: min(300px, calc(100vw - 24px));
+    width: min(340px, calc(100vw - 24px));
+    max-height: calc(100vh - 72px);
   }
 
-  .quest-stats {
-    flex-wrap: wrap;
-    justify-content: center;
+  .setup-toggle-btn {
+    top: 56px;
+    left: 12px;
+  }
+
+  .game-menu-btn {
+    top: 12px;
+    left: 12px;
   }
 }
