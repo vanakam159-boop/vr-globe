@@ -25,6 +25,30 @@ function CameraTracker({ cameraDataRef }) {
 }
 
 /**
+ * VRPositionTracker — Tracks headset position when in XR session
+ */
+function VRPositionTracker({ vrCameraDataRef }) {
+  const { camera } = useThree()
+  const isPresenting = useXR((state) => state.isPresenting)
+
+  useFrame(() => {
+    if (isPresenting && vrCameraDataRef.current) {
+      vrCameraDataRef.current = {
+        position: camera.position.toArray().map((v) => Number(v.toFixed(4))),
+        rotation: [camera.rotation.x, camera.rotation.y, camera.rotation.z].map((v) =>
+          Number(v.toFixed(4))
+        ),
+        fov: camera.fov,
+        isPresenting: true,
+      }
+    } else if (vrCameraDataRef.current) {
+      vrCameraDataRef.current.isPresenting = false
+    }
+  })
+  return null
+}
+
+/**
  * CameraLogger — Logs exact camera position & angles when Free Look is locked
  * Place this inside the <Canvas> so it can access useThree().
  */
@@ -294,6 +318,14 @@ export default function App() {
     fov: 45,
   })
 
+  // Ref for VR headset data (updated by VRPositionTracker inside Canvas)
+  const vrCameraDataRef = useRef({
+    position: [151.37, 0, 11.83],
+    rotation: [0, 0, 0],
+    fov: 45,
+    isPresenting: false,
+  })
+
   const handleSeasonChange = useCallback((s) => {
     playSeasonChime(s)
     setSeason(s)
@@ -401,6 +433,7 @@ export default function App() {
         isOpen={menuOpen}
         onToggle={() => setMenuOpen((v) => !v)}
         cameraDataRef={cameraDataRef}
+        vrCameraDataRef={vrCameraDataRef}
         masterPos={masterPos}
         masterRot={masterRot}
         masterScale={masterScale}
@@ -543,6 +576,9 @@ export default function App() {
 
             {/* Camera Tracker — keeps ref updated for menu copy */}
             <CameraTracker cameraDataRef={cameraDataRef} />
+
+            {/* VR Position Tracker — captures headset position in VR */}
+            <VRPositionTracker vrCameraDataRef={vrCameraDataRef} />
 
             {/* Camera Logger — logs position/rotation on lock */}
             <CameraLogger freeLook={freeLook} />

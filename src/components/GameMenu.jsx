@@ -5,14 +5,17 @@ import React, { useState, useCallback } from 'react'
  * ─────────────────────────────────
  * Provides:
  *   • Free World status
- *   • Lap VR Setup (adjust VR spawn offset)
+ *   • Lap VR Setup (adjust VR spawn offset + capture from camera/VR)
  *   • Copy Values (camera + model transform + VR offset to clipboard)
  */
+
+const DEFAULT_VR_SPAWN = [151.37, 0, 11.83]
 
 export default function GameMenu({
   isOpen,
   onToggle,
   cameraDataRef,
+  vrCameraDataRef,
   masterPos,
   masterRot,
   masterScale,
@@ -22,11 +25,17 @@ export default function GameMenu({
   setFreeLook,
 }) {
   const [copied, setCopied] = useState(false)
-  const [adjustMode, setAdjustMode] = useState(false)
 
   const handleCopy = useCallback(async () => {
     const cam = cameraDataRef?.current || {}
-    const text = `// Camera\nposition: [${cam.position?.map((v) => Number(v).toFixed(2)).join(', ')}]\nrotation: [${cam.rotation?.map((v) => Number(v).toFixed(4)).join(', ')}]\nfov: ${cam.fov || 45}\n\n// Model Transform\nmasterPos: [${masterPos.map((v) => Number(v).toFixed(2)).join(', ')}]\nmasterRot: [${masterRot.map((v) => Number(v).toFixed(2)).join(', ')}]\nmasterScale: [${masterScale.map((v) => Number(v).toFixed(2)).join(', ')}]\n\n// VR Offset\nvrOffset: [${vrOffset.map((v) => Number(v).toFixed(2)).join(', ')}]`
+    const vrCam = vrCameraDataRef?.current || {}
+    const inVR = vrCam.isPresenting
+
+    let text = `// Camera (Non-VR)\nposition: [${cam.position?.map((v) => Number(v).toFixed(2)).join(', ')}]\nrotation: [${cam.rotation?.map((v) => Number(v).toFixed(4)).join(', ')}]\nfov: ${cam.fov || 45}\n\n// Model Transform\nmasterPos: [${masterPos.map((v) => Number(v).toFixed(2)).join(', ')}]\nmasterRot: [${masterRot.map((v) => Number(v).toFixed(2)).join(', ')}]\nmasterScale: [${masterScale.map((v) => Number(v).toFixed(2)).join(', ')}]\n\n// VR Offset\nvrOffset: [${vrOffset.map((v) => Number(v).toFixed(2)).join(', ')}]`
+
+    if (inVR) {
+      text += `\n\n// VR Headset Position (Live)\nvrPosition: [${vrCam.position?.map((v) => Number(v).toFixed(2)).join(', ')}]\nvrRotation: [${vrCam.rotation?.map((v) => Number(v).toFixed(4)).join(', ')}]`
+    }
 
     try {
       await navigator.clipboard.writeText(text)
@@ -35,7 +44,7 @@ export default function GameMenu({
     } catch (err) {
       console.error('Failed to copy:', err)
     }
-  }, [cameraDataRef, masterPos, masterRot, masterScale, vrOffset])
+  }, [cameraDataRef, vrCameraDataRef, masterPos, masterRot, masterScale, vrOffset])
 
   const changeOffset = (index, delta) => {
     setVrOffset((prev) => {
@@ -46,6 +55,34 @@ export default function GameMenu({
   }
 
   const resetOffset = () => setVrOffset([0, 0, 0])
+
+  const useCameraAsVRSpawn = () => {
+    const cam = cameraDataRef?.current
+    if (!cam?.position) return
+    const [cx, cy, cz] = cam.position
+    const [sx, sy, sz] = DEFAULT_VR_SPAWN
+    // Offset = camera position - default spawn position
+    setVrOffset([
+      Number((cx - sx).toFixed(2)),
+      Number((cy - sy).toFixed(2)),
+      Number((cz - sz).toFixed(2)),
+    ])
+  }
+
+  const captureVRPosition = () => {
+    const vrCam = vrCameraDataRef?.current
+    if (!vrCam?.position || !vrCam.isPresenting) return
+    const [vx, vy, vz] = vrCam.position
+    const [sx, sy, sz] = DEFAULT_VR_SPAWN
+    // Offset = current headset position - default spawn position
+    setVrOffset([
+      Number((vx - sx).toFixed(2)),
+      Number((vy - sy).toFixed(2)),
+      Number((vz - sz).toFixed(2)),
+    ])
+  }
+
+  const isInVR = vrCameraDataRef?.current?.isPresenting || false
 
   return (
     <>
@@ -112,18 +149,35 @@ export default function GameMenu({
               <button className="btn btn-ghost" onClick={resetOffset}>
                 ↺ Reset Offset
               </button>
-              <button
-                className={`btn btn-ghost ${adjustMode ? 'active' : ''}`}
-                onClick={() => setAdjustMode((v) => !v)}
-              >
-                {adjustMode ? '🔧 Adjusting…' : '🔧 Adjust with Keys'}
-              </button>
             </div>
 
-            {adjustMode && (
+            {!isInVR && (
+              <button
+                className="btn btn-primary"
+                style={{ marginTop: 8, width: '100%' }}
+                onClick={useCameraAsVRSpawn}
+              >
+                📷 Use Camera as VR Spawn
+              </button>
+            )}
+            {!isInVR && (
               <p className="game-menu-hint">
-                Arrow keys / thumbsticks now move VR offset (0.5 per press).
-                Close menu to return to wheel control.
+                Move the camera to where you want to stand in VR, then click above.
+              </p>
+            )}
+
+            {isInVR && (
+              <button
+                className="btn btn-primary"
+                style={{ marginTop: 8, width: '100%' }}
+                onClick={captureVRPosition}
+              >
+                🥽 Capture Current VR Position
+              </button>
+            )}
+            {isInVR && (
+              <p className="game-menu-hint">
+                Stand where you want to spawn, then click to save this position.
               </p>
             )}
           </div>
