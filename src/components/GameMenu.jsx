@@ -201,12 +201,12 @@ export default function GameMenu({
               style={{ marginTop: 12, width: '100%' }}
               onClick={() => setVrPreview((v) => !v)}
             >
-              {vrPreview ? '👁️ VR Preview ON' : '👁️ Preview VR View'}
+              {vrPreview ? '👁️ Exit VR Preview' : '👁️ Preview VR View'}
             </button>
             <p className="game-menu-hint">
               {vrPreview
-                ? 'Camera is locked to your VR spawn. Adjust offsets above to fine-tune.'
-                : 'Lock the camera to your VR spawn position so you can preview it on screen.'}
+                ? 'Move freely with mouse to adjust. Click Exit to save this view as your VR spawn.'
+                : 'Enter preview mode to see and adjust your VR spawn on screen without a headset.'}
             </p>
 
             {!isInVR && (

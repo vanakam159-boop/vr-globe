@@ -25,20 +25,25 @@ function CameraTracker({ cameraDataRef }) {
 }
 
 /**
- * VRPreviewCamera — Forces the non-VR camera to the VR spawn view for preview
+ * VRPreviewInit — Sets camera to VR spawn ONCE when preview starts
  */
-function VRPreviewCamera({ vrOffset, vrRotOffset }) {
+function VRPreviewInit({ vrPreview, vrOffset, vrRotOffset }) {
   const { camera } = useThree()
-  const defaultSpawn = [151.37, 0, 11.83]
+  const prevPreview = useRef(false)
 
-  useFrame(() => {
-    const x = defaultSpawn[0] + vrOffset[0]
-    const y = defaultSpawn[1] + vrOffset[1]
-    const z = defaultSpawn[2] + vrOffset[2]
-    camera.position.set(x, y, z)
-    camera.rotation.set(vrRotOffset[0], vrRotOffset[1], vrRotOffset[2])
-    camera.updateProjectionMatrix()
-  })
+  useEffect(() => {
+    if (vrPreview && !prevPreview.current) {
+      const defaultSpawn = [151.37, 0, 11.83]
+      camera.position.set(
+        defaultSpawn[0] + vrOffset[0],
+        defaultSpawn[1] + vrOffset[1],
+        defaultSpawn[2] + vrOffset[2]
+      )
+      camera.rotation.set(vrRotOffset[0], vrRotOffset[1], vrRotOffset[2])
+      camera.updateProjectionMatrix()
+    }
+    prevPreview.current = vrPreview
+  }, [vrPreview, camera, vrOffset, vrRotOffset])
 
   return null
 }
@@ -447,6 +452,28 @@ export default function App() {
 
   const seasonColor = SEASON_COLORS[season] || '#a78bfa'
 
+  // Capture camera position as new VR offset when preview turns off
+  const prevVrPreviewRef = useRef(false)
+  useEffect(() => {
+    if (prevVrPreviewRef.current && !vrPreview) {
+      const cam = cameraDataRef.current
+      if (cam?.position) {
+        const defaultSpawn = [151.37, 0, 11.83]
+        setVrOffset([
+          Number((cam.position[0] - defaultSpawn[0]).toFixed(2)),
+          Number((cam.position[1] - defaultSpawn[1]).toFixed(2)),
+          Number((cam.position[2] - defaultSpawn[2]).toFixed(2)),
+        ])
+        setVrRotOffset([
+          Number(cam.rotation[0].toFixed(4)),
+          Number(cam.rotation[1].toFixed(4)),
+          Number(cam.rotation[2].toFixed(4)),
+        ])
+      }
+    }
+    prevVrPreviewRef.current = vrPreview
+  }, [vrPreview])
+
   return (
     <>
       {/* ── Game Menu ── */}
@@ -478,11 +505,11 @@ export default function App() {
 
       {/* ── Free Look Toggle (always visible) ── */}
       <button
-        className={`btn freelook-toggle-btn ${freeLook ? 'active' : ''} ${vrPreview ? 'disabled' : ''}`}
+        className={`btn freelook-toggle-btn ${freeLook || vrPreview ? 'active' : ''}`}
         onClick={() => { if (!vrPreview) toggleFreeLook() }}
-        title={vrPreview ? 'Disabled during VR Preview' : 'Press F to toggle'}
+        title={vrPreview ? 'Exit Preview to toggle Free Look' : 'Press F to toggle'}
       >
-        {vrPreview ? '👁️ VR Preview Active' : freeLook ? '🎥 Free Look' : '🔒 Locked'}
+        {vrPreview ? '👁️ VR Preview (Move Freely)' : freeLook ? '🎥 Free Look' : '🔒 Locked'}
       </button>
 
       {/* ── HUD Layer ── */}
@@ -608,16 +635,14 @@ export default function App() {
             {/* Camera Logger — logs position/rotation on lock */}
             <CameraLogger freeLook={freeLook} />
 
-            {/* VR Preview Camera — overrides the normal camera to show VR spawn view */}
-            {vrPreview && (
-              <VRPreviewCamera vrOffset={vrOffset} vrRotOffset={vrRotOffset} />
-            )}
+            {/* VR Preview Init — sets camera to VR spawn once when preview starts */}
+            <VRPreviewInit vrPreview={vrPreview} vrOffset={vrOffset} vrRotOffset={vrRotOffset} />
 
             {/* Free-look orbit controls with PAN support
                 - Left mouse: rotate/orbit
                 - Right mouse or Shift+Left: pan (move forward/back/left/right)
                 - Scroll: zoom */}
-            {freeLook && !vrPreview && (
+            {(freeLook || vrPreview) && (
               <OrbitControls
                 makeDefault
                 enabled={orbitEnabled}
