@@ -25,6 +25,25 @@ function CameraTracker({ cameraDataRef }) {
 }
 
 /**
+ * VRPreviewCamera — Forces the non-VR camera to the VR spawn view for preview
+ */
+function VRPreviewCamera({ vrOffset, vrRotOffset }) {
+  const { camera } = useThree()
+  const defaultSpawn = [151.37, 0, 11.83]
+
+  useFrame(() => {
+    const x = defaultSpawn[0] + vrOffset[0]
+    const y = defaultSpawn[1] + vrOffset[1]
+    const z = defaultSpawn[2] + vrOffset[2]
+    camera.position.set(x, y, z)
+    camera.rotation.set(vrRotOffset[0], vrRotOffset[1], vrRotOffset[2])
+    camera.updateProjectionMatrix()
+  })
+
+  return null
+}
+
+/**
  * VRPositionTracker — Tracks headset position when in XR session
  */
 function VRPositionTracker({ vrCameraDataRef }) {
@@ -311,6 +330,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [vrOffset, setVrOffset] = useState([0, 0, 0])
   const [vrRotOffset, setVrRotOffset] = useState([0, 0, 0])
+  const [vrPreview, setVrPreview] = useState(false)
 
   // Ref for camera data (updated by CameraTracker inside Canvas)
   const cameraDataRef = useRef({
@@ -442,6 +462,8 @@ export default function App() {
         setVrOffset={setVrOffset}
         vrRotOffset={vrRotOffset}
         setVrRotOffset={setVrRotOffset}
+        vrPreview={vrPreview}
+        setVrPreview={setVrPreview}
         freeLook={freeLook}
         setFreeLook={setFreeLook}
       />
@@ -456,11 +478,11 @@ export default function App() {
 
       {/* ── Free Look Toggle (always visible) ── */}
       <button
-        className={`btn freelook-toggle-btn ${freeLook ? 'active' : ''}`}
-        onClick={toggleFreeLook}
-        title="Press F to toggle"
+        className={`btn freelook-toggle-btn ${freeLook ? 'active' : ''} ${vrPreview ? 'disabled' : ''}`}
+        onClick={() => { if (!vrPreview) toggleFreeLook() }}
+        title={vrPreview ? 'Disabled during VR Preview' : 'Press F to toggle'}
       >
-        {freeLook ? '🎥 Free Look' : '🔒 Locked'}
+        {vrPreview ? '👁️ VR Preview Active' : freeLook ? '🎥 Free Look' : '🔒 Locked'}
       </button>
 
       {/* ── HUD Layer ── */}
@@ -586,11 +608,16 @@ export default function App() {
             {/* Camera Logger — logs position/rotation on lock */}
             <CameraLogger freeLook={freeLook} />
 
+            {/* VR Preview Camera — overrides the normal camera to show VR spawn view */}
+            {vrPreview && (
+              <VRPreviewCamera vrOffset={vrOffset} vrRotOffset={vrRotOffset} />
+            )}
+
             {/* Free-look orbit controls with PAN support
                 - Left mouse: rotate/orbit
                 - Right mouse or Shift+Left: pan (move forward/back/left/right)
                 - Scroll: zoom */}
-            {freeLook && (
+            {freeLook && !vrPreview && (
               <OrbitControls
                 makeDefault
                 enabled={orbitEnabled}

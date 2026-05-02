@@ -23,6 +23,8 @@ export default function GameMenu({
   setVrOffset,
   vrRotOffset,
   setVrRotOffset,
+  vrPreview,
+  setVrPreview,
   freeLook,
   setFreeLook,
 }) {
@@ -193,6 +195,19 @@ export default function GameMenu({
                 ↺ Reset Offset
               </button>
             </div>
+
+            <button
+              className={`btn btn-primary ${vrPreview ? 'active' : ''}`}
+              style={{ marginTop: 12, width: '100%' }}
+              onClick={() => setVrPreview((v) => !v)}
+            >
+              {vrPreview ? '👁️ VR Preview ON' : '👁️ Preview VR View'}
+            </button>
+            <p className="game-menu-hint">
+              {vrPreview
+                ? 'Camera is locked to your VR spawn. Adjust offsets above to fine-tune.'
+                : 'Lock the camera to your VR spawn position so you can preview it on screen.'}
+            </p>
 
             {!isInVR && (
               <button

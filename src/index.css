@@ -542,6 +542,13 @@ html, body, #root {
   border-color: rgba(86, 227, 159, 0.4);
 }
 
+.freelook-toggle-btn.disabled {
+  background: rgba(167, 139, 250, 0.2);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary-dim);
+  cursor: not-allowed;
+}
+
 /* ============================================
    Balance Board UI Styles
    ============================================ */
