@@ -333,8 +333,8 @@ export default function App() {
 
   // Menu & VR offset states
   const [menuOpen, setMenuOpen] = useState(false)
-  const [vrOffset, setVrOffset] = useState([0, 0, 0])
-  const [vrRotOffset, setVrRotOffset] = useState([0, 0, 0])
+  const [vrOffset, setVrOffset] = useState([-2.06, 24.98, -0.16])
+  const [vrRotOffset, setVrRotOffset] = useState([-1.1338, 1.3882, 1.1273])
   const [vrPreview, setVrPreview] = useState(false)
 
   // Ref for camera data (updated by CameraTracker inside Canvas)
